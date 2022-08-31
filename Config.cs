@@ -1,12 +1,36 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ASCII
 {
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct ConsoleFont
+    {
+        public uint Index;
+        public short SizeX, SizeY;
+    }
+    public static class ConsoleEdit
+    {
+        [DllImport("kernel32")]
+        private extern static bool SetConsoleFont(IntPtr hOutput, uint index);
+        private enum StdHandle
+        {
+            OutputHandle = -11
+        }
+
+        [DllImport("kernel32")]
+        private static extern IntPtr GetStdHandle(StdHandle index);
+        public static bool SetConsoleFont(uint index)
+        {
+            return SetConsoleFont(GetStdHandle(StdHandle.OutputHandle), index);
+        }
+    }
     public class ConfigConsole
     {
-        public int MAXsize {get; set;}
+        public int MAXsize;
         public ConfigConsole(int size)
         {
             this.MAXsize = size; 
@@ -17,18 +41,27 @@ namespace ASCII
     {
         public static void menu()
         {
-            ConsoleKeyInfo Key; 
+            ConsoleKeyInfo Key;
             while(true)
             {
+                ConsoleEdit.SetConsoleFont(2);
+                Console.SetWindowSize(58, 58);
+                Console.Clear();
+                StartText();
+                Console.WriteLine("\nPlease send key '1'");
                 Key = Console.ReadKey(true); 
                 if(Key.Key == ConsoleKey.D1)
                 {
                     while(true)
                     {
+                        Console.WriteLine("O - Conver image to ASCII\n\t!!!no save!!!");
                         Key = Console.ReadKey(true);
                         if (Key.Key == ConsoleKey.O)
                         {
-                            BitmapToASCII.d();
+                            var bitmap = new Bitmap(OpenFile());
+                            BitmapToASCII BtASCII = new BitmapToASCII(bitmap);
+                            Console.Clear();
+                            BtASCII.Procesing();
                         }
                         if (Key.Key == ConsoleKey.Escape)
                             break;
@@ -36,6 +69,23 @@ namespace ASCII
                 }
                 if (Key.Key == ConsoleKey.Escape)
                     break;
+            }
+        }
+
+        public static void StartText()
+        {
+            string[] StartText = { 
+                "░█████╗░░██████╗░█████╗░██╗██╗\t░█████╗░██████╗░████████╗",
+                "██╔══██╗██╔════╝██╔══██╗██║██║\t██╔══██╗██╔══██╗╚══██╔══╝",
+                "███████║╚█████╗░██║░░╚═╝██║██║\t███████║██████╔╝░░░██║░░░",
+                "██╔══██║░╚═══██╗██║░░██╗██║██║\t██╔══██║██╔══██╗░░░██║░░░",
+                "██║░░██║██████╔╝╚█████╔╝██║██║\t██║░░██║██║░░██║░░░██║░░░",
+                "╚═╝░░╚═╝╚═════╝░░╚════╝░╚═╝╚═╝\t╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░"
+            };
+
+            foreach (string t in StartText)
+            {
+                Console.WriteLine(t);
             }
         }
 
@@ -55,6 +105,8 @@ namespace ASCII
             {
                 Filter = "Images | *.jpg; *.png; *.bmp; *.JPEG"
             };
+            if (OpenFile.ShowDialog() != DialogResult.OK)
+                return null;
             return OpenFile.FileName;
         }
 

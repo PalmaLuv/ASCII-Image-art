@@ -11,7 +11,7 @@ namespace ASCII
             for (int i = 0; i < bitmap.Height; i++)
                 for (int j = 0; j < bitmap.Width; j++)
                 {
-                    var pixel = bitmap.GetPixel(i, j);
+                    var pixel = bitmap.GetPixel(j, i);
                     int avg = (pixel.R + pixel.G + pixel.B) / 3;
                     bitmap.SetPixel(j, i, Color.FromArgb(pixel.A, avg, avg, avg));
                 }
@@ -25,13 +25,11 @@ namespace ASCII
                 bitmap = new Bitmap(bitmap, new Size(MAXWidth, (int)MAXHeight));
             return bitmap;
         }
-
-
     }
 
     public class BitmapToASCII
     {
-        public ConfigConsole cf = new ConfigConsole(150);
+        public ConfigConsole cf = new ConfigConsole(3);
 
         private readonly Bitmap bitmap;
         private readonly string ASCII = " _.,-=+:;cba!?0123456789$W#@Ñ";
@@ -40,30 +38,32 @@ namespace ASCII
             this.bitmap = bitmap;
         }
 
-        public void Procesing(string FileName)
+        public void Procesing()
         {
-            var bitmap = new Bitmap(Menu.OpenFile());
-            bitmap = ResizeBitmap(bitmap, cf);
-            bitmap.ConvertToGrayscale();
-
-            var converter = new BitmapToASCIIConventer(bitmap);
-            var rows = converter.ConvertBitmap();
-
-            foreach (var row in rows)
-                Console.WriteLine(row);
-
-            Console.SetCursorPosition(0, 0);
-            string text = null;
-            try
+            var file = this.bitmap;
+            if (file != null)
             {
-                for (int i = 0; i < rows.Length; i++)
-                    for (int j = 0; j < rows[i].Length; j++)
-                        text = rows[i][j].ToString();
-                Clipboard.SetText(text);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                var bitmap = ProcessingPhoto.ResizeBitmap(this.bitmap, cf);
+                ProcessingPhoto.ConvertToGrad(bitmap);
+
+                var rows = ConvertBitmap();
+
+                foreach (var row in rows)
+                    Console.WriteLine(row);
+
+                Console.SetCursorPosition(0, 0);
+                string text = null;
+                try
+                {
+                    for (int i = 0; i < rows.Length; i++)
+                        for (int j = 0; j < rows[i].Length; j++)
+                            text = rows[i][j].ToString();
+                    Clipboard.SetText(text);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
 
