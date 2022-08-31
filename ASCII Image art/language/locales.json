@@ -1,0 +1,19 @@
+{
+    "locales":
+    [
+        {
+            "name": "EN-en",
+            "values": 
+            [
+                
+            ]
+        } ,
+        {
+            "name": "RU-ru",
+            "values": 
+            [
+
+            ]
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+C:\Users\Alexander\source\repos\ASCII Image art\ASCII Image art\obj\Debug\ASCII Image art.csproj.AssemblyReference.cache
+C:\Users\Alexander\source\repos\ASCII Image art\ASCII Image art\obj\Debug\ASCII Image art.csproj.CoreCompileInputs.cache
+C:\Users\Alexander\source\repos\ASCII Image art\ASCII Image art\bin\Debug\ASCII_Image_art.exe.config
+C:\Users\Alexander\source\repos\ASCII Image art\ASCII Image art\bin\Debug\ASCII_Image_art.exe
+C:\Users\Alexander\source\repos\ASCII Image art\ASCII Image art\bin\Debug\ASCII_Image_art.pdb
+C:\Users\Alexander\source\repos\ASCII Image art\ASCII Image art\obj\Debug\ASCII_Image_art.exe
+C:\Users\Alexander\source\repos\ASCII Image art\ASCII Image art\obj\Debug\ASCII_Image_art.pdb
