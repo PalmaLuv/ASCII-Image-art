@@ -9,7 +9,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.0-blueviolet" alt="Latest Stable Version">
-  <img src="https://img.shields.io/github/license/PalmaLuv/ASCII-Image-art" alt="License">
+  <img src="https://img.shields.io/github/license/PalmaLuv/ASCII-Image-art?color=%231E90FF" alt="License">
 </p>
 
 # About the program
